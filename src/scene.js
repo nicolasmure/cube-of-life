@@ -27,7 +27,7 @@ export const build = (id, textures) => {
     controls.addEventListener('change', () => render(renderer, scene, camera))
 	controls.minDistance = 20
 	controls.maxDistance = 50
-	controls.maxPolarAngle = Math.PI / 2
+	controls.maxPolarAngle = Math.PI * 2
 
     const cubeTexture = new THREE.Texture(textures[0].canvas)
 

@@ -8,7 +8,7 @@ import { computeNextFaceCells } from '../conway'
 export const startGameEpic = action$ =>
     action$.pipe(
         ofType(BUILT),
-        mergeMap(() => interval(1000)),
+        mergeMap(() => interval(10)),
         map(tick),
     )
 
