@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default ({
-	id,
+    id,
 }) =>
     <div id={ id }>
     </div>
