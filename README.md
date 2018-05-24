@@ -4,6 +4,8 @@ POC
 
 Conway's Game of life on a cube
 
+![gif](/doc/cube.gif)
+
 ## Install
 
 Clone the project and run
