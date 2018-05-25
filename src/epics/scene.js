@@ -25,7 +25,7 @@ export const reRenderSceneEpic = (action$, store) =>
             store.getState().scene.renderer,
             store.getState().scene.scene,
             store.getState().scene.camera,
-            store.getState().scene.cubeTexture,
+            store.getState().scene.mesh,
         )),
         ignoreElements(),
     )
