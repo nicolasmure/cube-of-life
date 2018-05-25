@@ -2,18 +2,19 @@ import { ALIVE } from './conway'
 import { FACE_SIZE } from './cube'
 
 export const CELL_WIDTH = 4
+export const DEBUG_FACES = true
 
 export const buildTextures = textures =>
-    textures.map((texture, face) => ({
+    textures.map((texture) => ({
         ...texture,
-        ...build(FACE_SIZE)
+        ...build()
     }))
 
-const build = (size) => {
+const build = () => {
     const canvas = document.createElement('canvas')
 
-    canvas.height = size * CELL_WIDTH
-    canvas.width = size * CELL_WIDTH
+    canvas.height = FACE_SIZE * CELL_WIDTH
+    canvas.width = FACE_SIZE * CELL_WIDTH
 
     const ctx = canvas.getContext('2d')
     ctx.fillStyle = 'white'
@@ -32,10 +33,10 @@ const build = (size) => {
 
 export const drawTextures = (textures, cube) =>
     cube.faces.map((face, i) =>
-        drawCells(textures[i].ctx, face)
+        drawCells(textures[i].ctx, face, i)
     )
 
-const drawCells = (ctx, face) => {
+const drawCells = (ctx, face, faceIndex) => {
     face.nextCells.forEach((xVal, x) =>
         face.nextCells[x].forEach((yVal, y) => {
             const cell = face.cells[x] && face.cells[x][y]
@@ -59,4 +60,26 @@ const drawCells = (ctx, face) => {
             )
         })
     )
+
+    if (DEBUG_FACES) {
+        debugFaces(ctx, faceIndex)
+    }
+}
+
+const debugFaces = (ctx, faceIndex) => {
+    const size = 20
+    ctx.fillStyle = 'red'
+
+    Array(faceIndex).fill(null).map((v, i) =>
+        ctx.fillRect(
+            size + i * size * 2,
+            size,
+            size,
+            size,
+        )
+    )
+
+    const length = FACE_SIZE * CELL_WIDTH
+    ctx.fillRect(0, 0, length, 1) // top segment
+    ctx.fillRect(length -1, 0, 1, length) // right segment
 }

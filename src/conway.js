@@ -104,13 +104,13 @@ const computeNextCell = (face, cube, x, y) => {
             let walkedCell
 
             if (i === -1) {
-                walkedCell = getTopFace(face, cube).cells[faceSize - 1][j]
+                walkedCell = getLeftFace(face, cube).cells[faceSize -1][j]
             } else if (i === faceSize) {
-                walkedCell = getBottomFace(face, cube).cells[0][j]
+                walkedCell = getRightFace(face, cube).cells[0][j]
             } else if (j === -1) {
-                walkedCell = getLeftFace(face, cube).cells[i][faceSize - 1]
+                walkedCell = getTopFace(face, cube).cells[i][faceSize -1]
             } else if (j === faceSize) {
-                walkedCell = getRightFace(face, cube).cells[i][0]
+                walkedCell = getBottomFace(face, cube).cells[i][0]
             } else {
                 walkedCell = cells[i][j]
             }

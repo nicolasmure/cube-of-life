@@ -8,13 +8,17 @@ const RIGHT = 1
 const BOTTOM = 2
 const LEFT = 3
 
+/**
+ * @see https://threejs.org/docs/#api/loaders/CubeTextureLoader
+ * for faces order
+ */
 const faceMap = [
-    [1, 2, 4, 3], // face 0, TOP, RIGHT, BOTTOM, LEFT
-    [5, 2, 0, 3], // face 1, TOP, RIGHT, BOTTOM, LEFT
-    [5, 4, 0, 1], // face 2, TOP, RIGHT, BOTTOM, LEFT
-    [1, 0, 4, 5], // face 3, TOP, RIGHT, BOTTOM, LEFT
-    [0, 2, 5, 3], // face 4, TOP, RIGHT, BOTTOM, LEFT
-    [4, 2, 1, 3], // face 5, TOP, RIGHT, BOTTOM, LEFT
+    [2, 5, 3, 4], // 0 : right face. TOP, RIGHT, BOTTOM, LEFT
+    [2, 4, 3, 5], // 1 : left face. TOP, RIGHT, BOTTOM, LEFT
+    [5, 0, 4, 1], // 2 : top face. TOP, RIGHT, BOTTOM, LEFT
+    [4, 0, 5, 1], // 3 : bottom face. TOP, RIGHT, BOTTOM, LEFT
+    [2, 0, 3, 1], // 4 : front face. TOP, RIGHT, BOTTOM, LEFT
+    [2, 1, 3, 0], // 5 : back face. TOP, RIGHT, BOTTOM, LEFT
 ]
 
 export const getTopFace = (actualFace, cube) =>
