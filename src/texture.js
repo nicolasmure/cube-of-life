@@ -37,6 +37,11 @@ export const drawTextures = (textures, cube) =>
     )
 
 const drawCells = (ctx, face, faceIndex) => {
+    // store the cells to paint to minimize brush color changes and
+    // improve painting perfs
+    const blackCells = []
+    const whiteCells = []
+
     face.nextCells.forEach((xVal, x) =>
         face.nextCells[x].forEach((yVal, y) => {
             const cell = face.cells[x] && face.cells[x][y]
@@ -47,25 +52,38 @@ const drawCells = (ctx, face, faceIndex) => {
                 return
             }
 
-            const color = ALIVE === nextCell
-                ? 'black'
-                : 'white'
+            let collection = ALIVE === nextCell
+                ? blackCells
+                : whiteCells
 
-            ctx.fillStyle = color
-            ctx.fillRect(
-                x * CELL_WIDTH,
-                y * CELL_WIDTH,
-                CELL_WIDTH,
-                CELL_WIDTH,
-            )
+            collection.push({ x, y })
         })
     )
+
+    // draw all the black cells
+    ctx.fillStyle = 'black'
+    blackCells.map(({ x, y }) => drawCell(ctx, x, y))
+
+    // draw all the white cells
+    ctx.fillStyle = 'white'
+    whiteCells.map(({ x, y }) => drawCell(ctx, x, y))
 
     if (DEBUG_FACES) {
         debugFaces(ctx, faceIndex)
     }
 }
 
+const drawCell = (ctx, x, y) =>
+    ctx.fillRect(
+        x * CELL_WIDTH,
+        y * CELL_WIDTH,
+        CELL_WIDTH,
+        CELL_WIDTH,
+    )
+
+/**
+ * Draw face ridges and some squares indicating the face index.
+ */
 const debugFaces = (ctx, faceIndex) => {
     const size = 20
     ctx.fillStyle = 'red'
@@ -80,6 +98,8 @@ const debugFaces = (ctx, faceIndex) => {
     )
 
     const length = FACE_SIZE * CELL_WIDTH
-    ctx.fillRect(0, 0, length, 1) // top segment
-    ctx.fillRect(length -1, 0, 1, length) // right segment
+    ctx.fillRect(0, 0, length, 1) // top ridge
+    ctx.fillRect(length -1, 0, 1, length) // right ridge
+    ctx.fillRect(0, length -1, length, 1) // bottom ridge
+    ctx.fillRect(0, 0, 1, length) // left ridge
 }
