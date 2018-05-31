@@ -1,8 +1,9 @@
 import {
-    getTopFace,
-    getRightFace,
-    getBottomFace,
-    getLeftFace,
+    TOP,
+    RIGHT,
+    BOTTOM,
+    LEFT,
+    getWalkedCellOnSiblingFace,
 } from './cube'
 
 export const DENSITY = 0.5 // 0 to 1 @TODO : make it configurable on the UI
@@ -104,13 +105,13 @@ const computeNextCell = (face, cube, x, y) => {
             let walkedCell
 
             if (i === -1) {
-                walkedCell = getTopFace(face, cube).cells[faceSize - 1][j]
+                walkedCell = getWalkedCellOnSiblingFace(face, cube, LEFT, i, j)
             } else if (i === faceSize) {
-                walkedCell = getBottomFace(face, cube).cells[0][j]
+                walkedCell = getWalkedCellOnSiblingFace(face, cube, RIGHT, i, j)
             } else if (j === -1) {
-                walkedCell = getLeftFace(face, cube).cells[i][faceSize - 1]
+                walkedCell = getWalkedCellOnSiblingFace(face, cube, TOP, i, j)
             } else if (j === faceSize) {
-                walkedCell = getRightFace(face, cube).cells[i][0]
+                walkedCell = getWalkedCellOnSiblingFace(face, cube, BOTTOM, i, j)
             } else {
                 walkedCell = cells[i][j]
             }

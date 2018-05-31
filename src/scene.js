@@ -29,22 +29,14 @@ export const build = (id, textures) => {
     controls.maxDistance = 50
     controls.maxPolarAngle = Math.PI * 2
 
-    const cubeTexture = new THREE.Texture(textures[0].canvas)
-
-    /*
-    const loader = new THREE.CubeTextureLoader()
-    const cubeTexture = loader.load(textures.map(texture =>
-        texture.canvas.toDataURL()
-    ))
-    */
-
-    const material = new THREE.MeshBasicMaterial({
-        map: cubeTexture,
-        // envMap: cubeTexture, // for CubeTexture
-    });
-
     const geometry = new THREE.BoxGeometry(10, 10, 10)
-    const mesh = new THREE.Mesh(geometry, material)
+    const materials = textures.map(t =>
+        new THREE.MeshBasicMaterial({
+            map: new THREE.Texture(t.canvas),
+        })
+    )
+
+    const mesh = new THREE.Mesh(geometry, materials)
 
     scene.add(mesh)
 
@@ -58,13 +50,16 @@ export const build = (id, textures) => {
         renderer,
         scene,
         camera,
-        cubeTexture,
+        mesh,
     }
 }
 
-export const render = (renderer, scene, camera, cubeTexture = null) => {
-    if (cubeTexture) {
-        cubeTexture.needsUpdate = true
+export const render = (renderer, scene, camera, mesh = null) => {
+    if (mesh) {
+        mesh.material.map(material =>
+            // indicate to update the texture
+            material.map.needsUpdate = true
+        )
     }
 
     renderer.render(scene, camera)

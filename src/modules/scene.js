@@ -3,7 +3,7 @@ const INITIAL_STATE = {
     scene: null,
     camera: null,
     renderer: null,
-    cubeTexture: null,
+    mesh: null,
 }
 
 export const BUILD_SCENE = 'col/scene/BUILD_SCENE'
@@ -13,12 +13,12 @@ export const buildScene = () => ({
     type: BUILD_SCENE,
 })
 
-export const sceneBuilt = ({ renderer, scene, camera, cubeTexture }) => ({
+export const sceneBuilt = ({ renderer, scene, camera, mesh }) => ({
     type: SCENE_BUILT,
     renderer,
     scene,
     camera,
-    cubeTexture,
+    mesh,
 })
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,7 +29,7 @@ export default (state = INITIAL_STATE, action) => {
                 renderer: action.renderer,
                 scene: action.scene,
                 camera: action.camera,
-                cubeTexture: action.cubeTexture,
+                mesh: action.mesh,
             }
 
         default:
