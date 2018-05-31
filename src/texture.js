@@ -2,7 +2,7 @@ import { ALIVE } from './conway'
 import { FACE_SIZE } from './cube'
 
 export const CELL_WIDTH = 4
-export const DEBUG_FACES = true
+export const DEBUG_FACES = false
 
 export const buildTextures = textures =>
     textures.map((texture) => ({
